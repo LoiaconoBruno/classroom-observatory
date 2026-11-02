@@ -1,0 +1,10 @@
+{
+  "name": "direccion-escolar-ia",
+  "version": "0.1.0",
+  "description": "Observación de clase con devolución para el docente: tiempo de habla, preguntas, espera y retomas",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test"
+  }
+}

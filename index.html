@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Observación de clase</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .reloj { font: 700 2.4rem var(--mono); letter-spacing: 0.02em; }
+    .grupo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .grupo button { padding: 14px 8px; font-weight: 600; }
+    .grupo button.activo { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+    kbd { font: 11px var(--mono); border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; margin-left: 4px; opacity: 0.8; }
+    ul.log { list-style: none; margin: 0; padding: 0; font-size: 0.85rem; max-height: 180px; overflow: auto; }
+    ul.log li { padding: 3px 0; border-bottom: 1px solid var(--border); }
+    .barra { display: flex; height: 26px; border-radius: 6px; overflow: hidden; margin: 8px 0; }
+    .barra div { display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #fff; white-space: nowrap; overflow: hidden; }
+    ul.dev { margin: 0; padding-left: 20px; }
+    ul.dev li { margin-bottom: 6px; }
+    @media print { .no-imprimir { display: none !important; } body { background: #fff; color: #000; } .card { border: 0; } }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <h1>Observación de clase</h1>
+    <p>Registrá quién habla, qué preguntas se hacen y cuánto se espera la respuesta. Al final, una devolución en forma de preguntas, para el docente: una herramienta para mejorar, no para sancionar.</p>
+  </header>
+
+  <main>
+    <div class="layout">
+      <section class="card no-imprimir" aria-labelledby="t-obs">
+        <h2 id="t-obs">Observar</h2>
+        <div class="reloj" id="reloj" aria-live="off">0:00</div>
+        <div class="row" style="margin:8px 0 14px">
+          <button id="empezar" class="primary">Empezar</button>
+          <button id="terminar" disabled>Terminar</button>
+          <button id="deshacer" disabled>Deshacer último</button>
+        </div>
+        <h3>¿Quién habla?</h3>
+        <div class="grupo" role="group" aria-label="Quién habla">
+          <button data-ev="habla:docente" disabled>Docente<kbd>D</kbd></button>
+          <button data-ev="habla:alumnos" disabled>Alumnos<kbd>A</kbd></button>
+          <button data-ev="habla:nadie" disabled>Silencio<kbd>S</kbd></button>
+        </div>
+        <h3>Marcar</h3>
+        <div class="grupo" role="group" aria-label="Marcar eventos">
+          <button data-ev="pregunta:abierta" disabled>Pregunta abierta<kbd>Q</kbd></button>
+          <button data-ev="pregunta:cerrada" disabled>Pregunta cerrada<kbd>C</kbd></button>
+          <button data-ev="retoma" disabled>Retoma una idea<kbd>R</kbd></button>
+        </div>
+        <h3>Últimos eventos</h3>
+        <ul class="log" id="log"></ul>
+        <div class="row" style="margin-top:12px">
+          <button id="ejemplo">Cargar clase de ejemplo</button>
+        </div>
+      </section>
+
+      <div style="display:grid; gap:16px; min-width:0">
+        <section class="card" aria-live="polite">
+          <h2>Devolución para el docente</h2>
+          <p class="muted small" id="estado">Empezá una observación o cargá la clase de ejemplo.</p>
+          <div id="reporte" hidden>
+            <div class="stats" id="stats"></div>
+            <h3>Tiempo de habla</h3>
+            <div class="barra" id="barra" aria-label="Reparto del tiempo de habla"></div>
+            <h3>Lo que salió bien</h3>
+            <ul class="dev" id="fortalezas"></ul>
+            <h3>Preguntas para pensar</h3>
+            <ul class="dev" id="preguntas"></ul>
+            <h3>Lo que esta observación no mide</h3>
+            <ul class="dev small muted" id="nomide"></ul>
+            <div class="row no-imprimir" style="margin-top:12px">
+              <button id="imprimir">Imprimir</button>
+              <button id="exportar">Exportar JSON</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="card small no-imprimir">
+          <h2>Antes de usarla en un aula real</h2>
+          <ul class="dev">
+            <li>Consentimiento: de los docentes observados y, si se graba, de las familias (en Argentina, Ley 25.326 de Protección de Datos Personales y Ley 26.061 de Protección Integral de Niñas, Niños y Adolescentes). Esta herramienta no graba nada: solo guarda los eventos que marcás.</li>
+            <li>La devolución es para el docente. Si se usa para evaluar o sancionar, pasa a medir otra cosa (ley de Goodhart).</li>
+            <li>Los indicadores son simples y propios, no una rúbrica validada. Para un piloto conviene adoptar un marco validado, como CLASS o el de Charlotte Danielson.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="no-imprimir">Los datos quedan en esta pestaña: al recargar la página se pierden, salvo que exportes el JSON.</footer>
+
+  <script src="src/observacion.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
