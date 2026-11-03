@@ -1,4 +1,19 @@
-# Observación de clase (dirección escolar con IA, versión 0)
+<div align="center">
+
+# Classroom Observatory
+
+**Observación de clase.** Registrá quién habla, qué se pregunta y cuánto se espera la respuesta. Una devolución para el docente, no para sancionar.
+
+[**▶ Probala en vivo**](https://loiaconobruno.github.io/classroom-observatory/) · [Cómo funciona](#cómo-funciona) · [Limitaciones](#limitaciones)
+
+[![Tests](https://github.com/LoiaconoBruno/classroom-observatory/actions/workflows/tests.yml/badge.svg)](https://github.com/LoiaconoBruno/classroom-observatory/actions/workflows/tests.yml)
+![Dependencias: 0](https://img.shields.io/badge/dependencias-0-brightgreen)
+![HTML, CSS y JavaScript](https://img.shields.io/badge/HTML%20%C2%B7%20CSS%20%C2%B7%20JS-sin%20build-f7df1e)
+[![Licencia MIT](https://img.shields.io/badge/licencia-MIT-blue)](LICENSE)
+
+<img src="docs/captura.png" alt="Captura de Classroom Observatory" width="800">
+
+</div>
 
 Herramienta para observar una clase **a mano** y generar una **devolución para el docente**: quién habla y cuánto, qué preguntas se hacen (abiertas o cerradas), cuánto se espera la respuesta después de preguntar y cuántas veces el docente retoma una idea de un alumno.
 
@@ -10,11 +25,23 @@ La idea original propone anteojos que graban la clase y una IA que audita al doc
 
 ## Instalación
 
-No hace falta instalar nada. Es una página estática sin dependencias. Para correr los tests hace falta Node 18 o más nuevo.
+No hace falta instalar nada: **[abrila en el navegador](https://loiaconobruno.github.io/classroom-observatory/)**.
+
+Para usarla sin conexión o modificarla:
+
+```bash
+git clone https://github.com/LoiaconoBruno/classroom-observatory.git
+```
+
+Después abrí `index.html` con doble clic. No hay dependencias ni paso de build. Para correr los tests hace falta Node 18 o más nuevo:
+
+```bash
+npm test
+```
 
 ## Uso
 
-Abrí `index.html` con doble clic.
+Abrí la [demo en vivo](https://loiaconobruno.github.io/classroom-observatory/) o `index.html` con doble clic.
 
 **Observar una clase:** apretá **Empezar** y, durante la clase, marcá quién habla (Docente, Alumnos, Silencio) y cada pregunta del docente (abierta o cerrada) o cada vez que retoma una idea de un alumno. Hay atajos de teclado: D, A, S, Q (pregunta abierta), C (pregunta cerrada) y R (retoma). **Deshacer último** corrige un error. Al final, **Terminar**.
 

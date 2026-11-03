@@ -1,10 +1,16 @@
 {
-  "name": "direccion-escolar-ia",
+  "name": "classroom-observatory",
   "version": "0.1.0",
-  "description": "Observación de clase con devolución para el docente: tiempo de habla, preguntas, espera y retomas",
+  "description": "Observación de clase con devolución para el docente: tiempo de habla, preguntas, espera y retomas.",
   "private": true,
   "license": "MIT",
   "scripts": {
     "test": "node --test"
-  }
+  },
+  "homepage": "https://loiaconobruno.github.io/classroom-observatory/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoiaconoBruno/classroom-observatory.git"
+  },
+  "author": "Bruno Loiacono"
 }
