@@ -358,7 +358,53 @@ El segundo próximo paso del proyecto es un piloto con dos o tres docentes volun
 
 El piloto no busca probar que la herramienta mejora el aprendizaje (con tres docentes no se puede), sino aprender lo suficiente para decidir si vale la pena automatizar y qué.
 
-### 23. Del modelo al código
+### 23. Lo que mostraron las observaciones a gran escala
+
+Los indicadores de la herramienta no son una curiosidad académica: hay estudios que observaron decenas de miles de clases con instrumentos parecidos, y sus resultados ayudan a poner en contexto lo que se ve en una sola.
+
+#### 23.1 Tres países filmados: el estudio de video de TIMSS
+
+En 1995, como parte del Estudio Internacional de Tendencias en Matemática y Ciencias (TIMSS), un equipo dirigido por James Stigler filmó clases de matemática de octavo grado elegidas al azar en Alemania, Japón y Estados Unidos. Stigler y James Hiebert analizaron los videos en *The Teaching Gap* (1999). Encontraron que cada país tenía un **guion cultural** de clase muy estable, compartido por casi todos sus docentes. En las clases japonesas típicas, el docente planteaba un problema que los alumnos no sabían resolver todavía, los alumnos trabajaban solos o en grupos, presentaban distintas soluciones y la clase las comparaba. En las estadounidenses típicas, el docente mostraba un procedimiento y los alumnos lo practicaban con ejercicios parecidos.
+
+Para la herramienta, el estudio deja dos lecciones. La primera es que los patrones de habla, preguntas y espera no son decisiones individuales sino, en buena medida, culturales: un docente que habla el 82 % del tiempo puede estar siguiendo el guion de su sistema escolar más que un estilo propio. La segunda es que los guiones se pueden cambiar, pero no de a un docente por vez: Stigler y Hiebert argumentaron que mejorar la enseñanza requiere trabajo colectivo y sostenido sobre clases concretas.
+
+#### 23.2 Las aulas de América Latina
+
+Barbara Bruns y Javier Luque, del Banco Mundial, publicaron en 2015 *Great Teachers: How to Raise Student Learning in Latin America and the Caribbean*, con los resultados de observaciones en más de 15 000 aulas de siete países de la región. Usaron el método de **instantáneas de clase de Stallings**: a intervalos regulares, el observador anota qué está haciendo el docente y qué están haciendo los alumnos. Encontraron que, en promedio, los docentes dedicaban a la instrucción alrededor de dos tercios del tiempo de clase, frente a un 85 % que se toma como referencia de buena práctica: una diferencia equivalente a perder aproximadamente un día de clase por semana. Gran parte del tiempo de instrucción se iba en actividades de baja exigencia, como copiar del pizarrón, y una fracción considerable de alumnos estaba desconectada de la actividad.
+
+El indicador central de Stallings, el uso del tiempo, es complementario de los de la herramienta. La herramienta mira **cómo** se habla durante la clase; Stallings mira **en qué** se usa el tiempo. Una clase puede tener muy buena espera y muchas preguntas abiertas en los pocos minutos que se dedican a la discusión, y perder el resto en tareas administrativas. Una versión futura podría agregar una marca de "actividad" (instrucción, práctica, organización, tiempo perdido) para cubrir esa dimensión.
+
+#### 23.3 Instrumentos para sistemas enteros
+
+A partir de experiencias como esa, el Banco Mundial desarrolló en 2019 **Teach**, un instrumento abierto de observación de clases pensado para países de ingresos bajos y medios. Combina una medida del tiempo dedicado al aprendizaje con una evaluación de prácticas en tres áreas: clima del aula, instrucción y habilidades socioemocionales. Está diseñado para que lo apliquen observadores con una capacitación breve, y se usó para relevar la calidad de la enseñanza en varios países.
+
+La existencia de instrumentos como Teach, CLASS o el marco de Danielson refuerza el primer próximo paso del proyecto: antes de inventar indicadores propios para un piloto, conviene adoptar uno validado y usar la herramienta como complemento para las dimensiones de discurso que ese instrumento mide con menos detalle.
+
+### 24. Observar entre pares: el estudio de clases
+
+La herramienta propone que la devolución sea para el docente. Hay una tradición que va todavía más lejos: que la observación la hagan los propios docentes, entre ellos, sobre una clase que planificaron juntos.
+
+#### 24.1 El *jugyou kenkyuu* japonés
+
+En Japón, desde hace más de un siglo, los docentes practican el **estudio de clases** (*jugyou kenkyuu*, traducido al inglés como *lesson study*). Un grupo de docentes elige un objetivo de aprendizaje, investiga cómo suelen pensar los alumnos sobre ese tema, planifica una clase en detalle, anticipando las respuestas probables. Uno de ellos la dicta mientras los demás observan, no al docente sino a los **alumnos**: qué dicen, dónde se traban, qué estrategias usan. Después discuten lo observado, revisan la planificación y, a veces, la vuelven a dictar con otro grupo.
+
+Catherine Lewis, Rebecca Perry y Aki Murata analizaron en 2006 (*Educational Researcher*, 35(3), 3–14) cómo el estudio de clases mejora la enseñanza: no por una técnica en particular, sino porque aumenta el conocimiento de los docentes sobre el contenido y sobre el pensamiento de los alumnos, fortalece la colaboración y crea un hábito de mirar la propia práctica con evidencia. Stigler y Hiebert lo señalaron como una de las razones de la estabilidad y la calidad del guion japonés.
+
+#### 24.2 Qué cambia si observan los colegas
+
+El estudio de clases tiene tres diferencias con el modelo de inspección que proponía la idea original:
+
+- **El objeto de la observación es la clase, no el docente.** Lo que se discute es si la planificación funcionó, y la planificación es de todos.
+- **Lo que se mira es el aprendizaje.** Los observadores anotan lo que hacen y dicen los alumnos, que es lo que más importa y lo que la herramienta no mide.
+- **No hay jerarquía.** Observan pares, no supervisores. La devolución no tiene consecuencias administrativas.
+
+La herramienta podría usarse dentro de un esquema así: un colega observa con los botones mientras otros toman notas sobre los alumnos, y los indicadores de habla, preguntas y espera se discuten junto con esas notas. Es probablemente el uso más fértil, y el menos parecido a la vigilancia que la idea original imaginaba.
+
+#### 24.3 Experiencias en la región
+
+El estudio de clases se adaptó en muchos países, incluidos varios de América Latina, en programas de formación docente, sobre todo en matemática. Las adaptaciones muestran que el formato no se trasplanta tal cual: requiere tiempo institucional para que los docentes planifiquen y observen juntos, algo que las escuelas organizadas por horas cátedra rara vez tienen. Esa es, quizás, la conclusión más práctica para un piloto: cualquier sistema de observación, manual o automático, depende de que exista un tiempo protegido para conversar sobre lo observado. Sin esa conversación, el mejor reporte termina en un cajón.
+
+### 25. Del modelo al código
 
 | Concepto | En `src/observacion.js` | Qué produce |
 |---|---|---|
@@ -383,7 +429,7 @@ m.esperaPromedio;      // 1,9
 O.devolucion(m).preguntas.length;   // 5
 ```
 
-### 24. Ejercicios
+### 26. Ejercicios
 
 1. Observá diez minutos de una clase (propia o de un video público de una clase) con la herramienta. Anotá qué fue lo más difícil de marcar.
 2. Con la clase de ejemplo, ¿cuánto tendría que haber durado la espera promedio para que apareciera en "Lo que salió bien"? ¿Cuántas de las cinco esperas tendrían que cambiar?
@@ -393,7 +439,7 @@ O.devolucion(m).preguntas.length;   // 5
 6. Diseñá el texto del consentimiento informado para un piloto con solo audio. ¿Qué tiene que decir según la Ley 25.326?
 7. Imaginá que el porcentaje de preguntas abiertas se usa para evaluar docentes. Describí tres maneras en que el indicador se podría "inflar" sin que mejore la clase.
 
-### 25. Glosario
+### 27. Glosario
 
 - **Devolución:** información sobre el propio desempeño, orientada a mejorar.
 - **Pregunta cerrada:** pregunta con una respuesta corta y prefijada.
@@ -409,7 +455,7 @@ O.devolucion(m).preguntas.length;   // 5
 - **Ley de Campbell:** los indicadores usados para decidir tienden a corromperse.
 - **Panóptico:** dispositivo de vigilancia en el que el vigilado no sabe cuándo lo observan.
 
-### 26. Conclusión
+### 28. Conclusión
 
 La idea de una dirección escolar apoyada en IA y wearables tiene un núcleo valioso y una forma peligrosa. El núcleo es que hay indicadores del discurso del aula que la investigación sabe medir y que se asocian con mejor aprendizaje: cuánto hablan los alumnos (Flanders), cuántas preguntas son auténticas y cuántas ideas se retoman (Nystrand), cuánto se espera después de preguntar (Rowe, Tobin). La forma peligrosa es grabar todo y reportar a la dirección, que convierte la observación en un panóptico y los indicadores en objetivos que se corrompen, como advierten Foucault y Campbell, y que desconoce lo que la investigación dice sobre devoluciones que dañan (Kluger y DeNisi).
 
@@ -417,8 +463,10 @@ La herramienta se queda con el núcleo y descarta la forma: observación a mano,
 
 ## Referencias
 
+- Banco Mundial. (2019). *Teach: Classroom Observation Tool*. World Bank Group.
 - Bentham, J. (1791). *Panopticon; or, the Inspection-House*. Londres: T. Payne.
 - Black, P., & Wiliam, D. (1998). Assessment and classroom learning. *Assessment in Education: Principles, Policy & Practice*, 5(1), 7–74. https://doi.org/10.1080/0969595980050102
+- Bruns, B., & Luque, J. (2015). *Great Teachers: How to Raise Student Learning in Latin America and the Caribbean*. World Bank. https://doi.org/10.1596/978-1-4648-0151-8
 - Campbell, D. T. (1979). Assessing the impact of planned social change. *Evaluation and Program Planning*, 2(1), 67–90. https://doi.org/10.1016/0149-7189(79)90048-X
 - Cazden, C. B. (2001). *Classroom Discourse: The Language of Teaching and Learning* (2.ª ed.). Heinemann. ISBN 978-0-325-00378-5.
 - Danielson, C. (2007). *Enhancing Professional Practice: A Framework for Teaching* (2.ª ed.). ASCD. ISBN 978-1-4166-0517-1.
@@ -432,6 +480,7 @@ La herramienta se queda con el núcleo y descarta la forma: observación a mano,
 - Kelly, S., Olney, A. M., Donnelly, P., Nystrand, M., & D'Mello, S. K. (2018). Automatically measuring question authenticity in real-world classrooms. *Educational Researcher*, 47(7), 451–464. https://doi.org/10.3102/0013189X18785613
 - Kluger, A. N., & DeNisi, A. (1996). The effects of feedback interventions on performance: A historical review, a meta-analysis, and a preliminary feedback intervention theory. *Psychological Bulletin*, 119(2), 254–284. https://doi.org/10.1037/0033-2909.119.2.254
 - Kraft, M. A., Blazar, D., & Hogan, D. (2018). The effect of teacher coaching on instruction and achievement: A meta-analysis of the causal evidence. *Review of Educational Research*, 88(4), 547–588. https://doi.org/10.3102/0034654318759268
+- Lewis, C., Perry, R., & Murata, A. (2006). How should research contribute to instructional improvement? The case of lesson study. *Educational Researcher*, 35(3), 3–14. https://doi.org/10.3102/0013189X035003003
 - Ley 25.326 de Protección de los Datos Personales. (2000). *Boletín Oficial de la República Argentina*, 2 de noviembre de 2000.
 - Ley 26.061 de Protección Integral de los Derechos de las Niñas, Niños y Adolescentes. (2005). *Boletín Oficial de la República Argentina*, 26 de octubre de 2005.
 - Mehan, H. (1979). *Learning Lessons: Social Organization in the Classroom*. Harvard University Press.
@@ -445,4 +494,5 @@ La herramienta se queda con el núcleo y descarta la forma: observación a mano,
 - Rowe, M. B. (1986). Wait time: Slowing down may be a way of speeding up! *Journal of Teacher Education*, 37(1), 43–50. https://doi.org/10.1177/002248718603700110
 - Scriven, M. (1967). The methodology of evaluation. En R. W. Tyler, R. M. Gagné & M. Scriven (Eds.), *Perspectives of Curriculum Evaluation* (pp. 39–83). Rand McNally.
 - Sinclair, J. M., & Coulthard, R. M. (1975). *Towards an Analysis of Discourse: The English Used by Teachers and Pupils*. Oxford University Press.
+- Stigler, J. W., & Hiebert, J. (1999). *The Teaching Gap: Best Ideas from the World's Teachers for Improving Education in the Classroom*. Free Press. ISBN 978-0-684-85274-4.
 - Tobin, K. (1987). The role of wait time in higher cognitive level learning. *Review of Educational Research*, 57(1), 69–95. https://doi.org/10.3102/00346543057001069
