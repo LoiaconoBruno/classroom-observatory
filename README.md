@@ -4,7 +4,7 @@
 
 **Observación de clase.** Registrá quién habla, qué se pregunta y cuánto se espera la respuesta. Una devolución para el docente, no para sancionar.
 
-[**▶ Probala en vivo**](https://loiaconobruno.github.io/classroom-observatory/) · [Cómo funciona](#cómo-funciona) · [Limitaciones](#limitaciones)
+[**▶ Probala en vivo**](https://loiaconobruno.github.io/classroom-observatory/) · [**📄 Paper y guía**](https://loiaconobruno.github.io/classroom-observatory/guia.html) · [Cómo funciona](#cómo-funciona) · [Limitaciones](#limitaciones)
 
 [![Tests](https://github.com/LoiaconoBruno/classroom-observatory/actions/workflows/tests.yml/badge.svg)](https://github.com/LoiaconoBruno/classroom-observatory/actions/workflows/tests.yml)
 ![Dependencias: 0](https://img.shields.io/badge/dependencias-0-brightgreen)
@@ -79,6 +79,10 @@ npm test
 - Piloto con 2 o 3 docentes voluntarios, solo audio y con el reporte para ellos.
 - Revisar el marco legal: consentimiento de familias y docentes (Ley 25.326 y Ley 26.061).
 - Recién después, automatizar con análisis de audio: transcripción y detección de preguntas.
+
+## Paper de uso y guía
+
+[`guia.html`](https://loiaconobruno.github.io/classroom-observatory/guia.html) (fuente en [`docs/guia.md`](docs/guia.md)) tiene un paper de uso paso a paso y una guía de unas 20 páginas sobre la idea de fondo, con citas a los especialistas del tema.
 
 ## Licencia
 
