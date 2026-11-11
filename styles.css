@@ -595,15 +595,17 @@ kbd {
 }
 
 .cifra {
-  padding: var(--e-3);
+  padding: var(--e-3) var(--e-4);
   border: 1px solid var(--borde);
+  border-top: 4px solid var(--acento);
   border-radius: var(--r-2);
 }
 
 .cifra__k {
   margin: 0;
   color: var(--texto-suave);
-  font-size: var(--t-1);
+  font-size: var(--t-2);
+  font-weight: 700;
 }
 
 .cifra__v {
@@ -611,6 +613,51 @@ kbd {
   font-size: var(--t-5);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
+}
+
+.cifra__que {
+  margin: var(--e-2) 0 0;
+  padding-top: var(--e-2);
+  border-top: 1px dashed var(--borde);
+  color: var(--texto-suave);
+  font-size: var(--t-2);
+}
+
+.cifra__ref {
+  margin: var(--e-1) 0 0;
+  color: var(--texto-suave);
+  font-size: var(--t-1);
+  font-weight: 600;
+}
+
+.escala {
+  position: relative;
+  height: 8px;
+  margin-top: var(--e-2);
+  border-radius: var(--r-pildora);
+  background: var(--superficie-2);
+}
+
+.escala__valor {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: var(--r-pildora);
+  background: var(--acento);
+}
+
+.escala__ref {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--texto);
+}
+
+.reporte__ayuda {
+  max-width: 60rem;
+  color: var(--texto-suave);
+  font-size: var(--t-2);
 }
 
 .cifra__d {

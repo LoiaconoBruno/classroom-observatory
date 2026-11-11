@@ -391,6 +391,14 @@
     mostrar("reporte");
   }
   $("ver-ejemplo").addEventListener("click", verEjemplo);
+  $("portada-ejemplo").addEventListener("click", verEjemplo);
+  $("portada-empezar").addEventListener("click", async () => {
+    $("form-docente").scrollIntoView({ behavior: "smooth", block: "center" });
+    if (await conConsentimiento()) $("alias").focus({ preventScroll: true });
+  });
+  $("dialogo-consentimiento").addEventListener("close", () => {
+    if ($("dialogo-consentimiento").returnValue !== "ejemplo" && document.activeElement === document.body) $("alias").focus();
+  });
 
   async function verReporte(obs) {
     e.esEjemplo = false;
@@ -412,13 +420,22 @@
       + (numero >= 0 ? dato("Observación", `${numero + 1} de ${historial.length}`) : "");
 
     const p = m.participacion;
-    const cifra = (k, v, det = "") => `<div class="cifra"><p class="cifra__k">${k}</p><p class="cifra__v">${v}</p>${det ? `<p class="cifra__d">${det}</p>` : ""}</div>`;
-    $("cifras").innerHTML = cifra("Habla del docente", pct(m.porcentajeDocente), "del tiempo en que alguien habló")
-      + cifra("Preguntas", m.preguntas, `${m.abiertas} ${m.abiertas === 1 ? "abierta" : "abiertas"}, ${m.cerradas} ${m.cerradas === 1 ? "cerrada" : "cerradas"}`)
-      + cifra("Espera promedio", m.esperaPromedio === null ? "—" : seg(m.esperaPromedio), `${m.esperasCortas} de ${m.esperas.length} esperas por debajo de 3 s`)
-      + cifra("Retomas", m.retomas, "ideas de alumnos usadas para seguir")
-      + (p && p.total ? cifra("Participación", `${p.participaron} de ${p.presentes}`, `${pct(p.porcentaje)} de los alumnos habló`) : "")
-      + (p && p.participaron > 3 ? cifra("Concentración", pct(p.tresPrimeros), `de las intervenciones, de los 3 que más hablaron (Gini ${p.gini.toFixed(2).replace(".", ",")})`) : "");
+    // Cada indicador dice qué mide en palabras simples. Solo la espera tiene una
+    // referencia de la investigación (Rowe, 1974): se marca en una barra, sin colores
+    // de bien o mal, porque la devolución no es un puntaje.
+    const cifra = (k, v, det = "", que = "", extra = "") => `<div class="cifra"><p class="cifra__k">${k}</p><p class="cifra__v">${v}</p>${det ? `<p class="cifra__d">${det}</p>` : ""}${extra}${que ? `<p class="cifra__que">${que}</p>` : ""}</div>`;
+    const ESPERA_REF = 3;
+    const escalaEspera = m.esperaPromedio === null ? "" : (() => {
+      const tope = Math.max(6, Math.ceil(m.esperaPromedio));
+      const a = (x) => `${Math.min(100, (x / tope) * 100)}%`;
+      return `<div class="escala" role="img" aria-label="Espera promedio ${seg(m.esperaPromedio)}; referencia de la investigación: ${ESPERA_REF} segundos"><span class="escala__valor" style="width:${a(m.esperaPromedio)}"></span><span class="escala__ref" style="left:${a(ESPERA_REF)}"></span></div><p class="cifra__ref">Referencia: ${ESPERA_REF} s o más (Rowe, 1974)</p>`;
+    })();
+    $("cifras").innerHTML = cifra("Habla del docente", pct(m.porcentajeDocente), "del tiempo en que alguien habló", "Qué parte de la charla de la clase fue del docente.")
+      + cifra("Preguntas", m.preguntas, `${m.abiertas} ${m.abiertas === 1 ? "abierta" : "abiertas"}, ${m.cerradas} ${m.cerradas === 1 ? "cerrada" : "cerradas"}`, "Abiertas: admiten varias respuestas. Cerradas: tienen una sola.")
+      + cifra("Espera promedio", m.esperaPromedio === null ? "—" : seg(m.esperaPromedio), `${m.esperasCortas} de ${m.esperas.length} esperas por debajo de 3 s`, "Cuánto se esperó, después de preguntar, antes de volver a hablar.", escalaEspera)
+      + cifra("Retomas", m.retomas, "ideas de alumnos usadas para seguir", "Veces que el docente usó lo que dijo un alumno para avanzar.")
+      + (p && p.total ? cifra("Participación", `${p.participaron} de ${p.presentes}`, `${pct(p.porcentaje)} de los alumnos habló`, "Cuántos alumnos hablaron al menos una vez.") : "")
+      + (p && p.participaron > 3 ? cifra("Concentración", pct(p.tresPrimeros), `de las intervenciones, de los 3 que más hablaron (Gini ${p.gini.toFixed(2).replace(".", ",")})`, "Si la palabra se repartió o quedó en pocos.") : "");
 
     const total = m.habla.docente + m.habla.alumnos + m.habla.nadie || 1;
     const tramo = (clase, k, nombre) => (m.habla[k] > 0 ? `<span class="${clase}" style="flex:${m.habla[k] / total}">${pct(m.habla[k] / total)}</span>` : "");
@@ -776,8 +793,9 @@
       e.persistente = false;
     }
     await cargarAjustes();
+    // El aviso de consentimiento aparece cuando se va a guardar algo (agregar un
+    // docente o preparar una observación), no al abrir: primero se ve qué es la app.
     await irInicio();
-    if (!(await e.almacen.ajustes.leer("consentimiento"))) $("dialogo-consentimiento").showModal();
   }
 
   iniciar();

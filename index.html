@@ -8,17 +8,17 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f6f8">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1015">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233a4bd6'/%3E%3Cpath d='M8 21h16M10 21v-4h4v4M18 21V11h4v10' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linejoin='round'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="css/sistema.css">
-  <link rel="stylesheet" href="styles.css">
-  <script src="src/plano.js" defer></script>
-  <script src="src/observacion.js" defer></script>
-  <script src="src/evidencia.js" defer></script>
-  <script src="src/rubrica.js" defer></script>
-  <script src="src/privacidad.js" defer></script>
-  <script src="src/almacen.js" defer></script>
-  <script src="src/ia.js" defer></script>
-  <script src="src/transcripcion.js" defer></script>
-  <script src="src/app.js" defer></script>
+  <link rel="stylesheet" href="css/sistema.css?v=1.2">
+  <link rel="stylesheet" href="styles.css?v=1.2">
+  <script src="src/plano.js?v=1.2" defer></script>
+  <script src="src/observacion.js?v=1.2" defer></script>
+  <script src="src/evidencia.js?v=1.2" defer></script>
+  <script src="src/rubrica.js?v=1.2" defer></script>
+  <script src="src/privacidad.js?v=1.2" defer></script>
+  <script src="src/almacen.js?v=1.2" defer></script>
+  <script src="src/ia.js?v=1.2" defer></script>
+  <script src="src/transcripcion.js?v=1.2" defer></script>
+  <script src="src/app.js?v=1.2" defer></script>
 </head>
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -42,9 +42,19 @@
 
       <!-- Inicio: docentes -->
       <section id="vista-inicio" class="vista" aria-labelledby="t-inicio">
-        <div class="intro">
-          <h1 id="t-inicio">Devoluciones para docentes, no puntajes</h1>
-          <p>Observá una clase con el plano del aula: quién habla, qué se pregunta, cuánto se espera la respuesta y quiénes participan. Al final, una devolución en forma de preguntas, para el docente. Los datos quedan en este dispositivo.</p>
+        <div class="portada">
+          <span class="portada__etiqueta">Para equipos directivos y docentes</span>
+          <h1 id="t-inicio">Observá una clase y devolvé preguntas, no puntajes</h1>
+          <p class="portada__bajada">Con el plano del aula en la pantalla, registrás quién habla, qué se pregunta, cuánto se espera la respuesta y quiénes participan. Al terminar, la app arma una devolución para conversar con el docente. Los datos no salen de este dispositivo.</p>
+          <div class="portada__acciones">
+            <button type="button" class="btn btn--blanco btn--grande" id="portada-ejemplo">Ver una clase de ejemplo</button>
+            <button type="button" class="btn btn--claro btn--grande" id="portada-empezar">Empezar con un docente</button>
+          </div>
+          <ol class="como-funciona" aria-label="Cómo funciona">
+            <li><strong>Armá el plano del aula</strong><span>Marcá los bancos ocupados. Cada alumno es un número o unas iniciales, nunca un nombre.</span></li>
+            <li><strong>Observá la clase</strong><span>Tocá quién habla, cada pregunta y cada respuesta. La app mide los tiempos por vos.</span></li>
+            <li><strong>Recibí la devolución</strong><span>Indicadores claros y preguntas para pensar juntos, apoyadas en investigación sobre el diálogo en el aula.</span></li>
+          </ol>
         </div>
 
         <div class="inicio">
@@ -192,6 +202,7 @@
 
         <section class="reporte__seccion" aria-labelledby="t-indicadores">
           <h2 id="t-indicadores">Indicadores</h2>
+          <p class="reporte__ayuda">No son notas: describen cómo fue la clase. Solo el tiempo de espera tiene una referencia de la investigación (3 segundos o más, según Rowe, 1974). Sirven para conversar con el docente, no para compararlo.</p>
           <div class="cifras" id="cifras"></div>
           <h3>Tiempo de la clase</h3>
           <div class="barra" id="barra" role="img"></div>

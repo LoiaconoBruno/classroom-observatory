@@ -43,7 +43,7 @@ Para usar la IA hace falta además el servidor de la escuela: ver [`worker/READM
 
 ## Uso
 
-1. La primera vez, leé el aviso de privacidad y confirmá que el docente está de acuerdo y que la escuela informó a las familias.
+1. La primera vez que vayas a guardar algo (agregar un docente o preparar una observación), leé el aviso de privacidad y confirmá que el docente está de acuerdo y que la escuela informó a las familias.
 2. Agregá al docente (con su nombre o un alias) y tocá **Observar**.
 3. Armá el **plano del aula**: hasta 30 alumnos, identificados solo por número o iniciales.
 4. **Empezar.** Durante la clase, marcá quién habla, con Docente (D), Grupo de alumnos (A), Silencio (S) o **tocando el lugar del alumno que habla**. Marcá cada pregunta como abierta (Q) o cerrada (C), con su texto si querés, y cada retoma de una idea de un alumno (R). Z deshace.

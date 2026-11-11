@@ -32,7 +32,7 @@ Después se abre `index.html` con doble clic. El servidor de la escuela, necesar
 
 ### 3. Cómo se observa
 
-1. **Consentimiento.** La primera vez, la página explica qué se guarda y qué no, cita la Ley 25.326 y la Ley 26.061, y pide confirmar dos cosas: que el docente está de acuerdo y la escuela informó a las familias, y que la devolución se va a usar para acompañar, no para calificar (sección 9).
+1. **Consentimiento.** La primera vez que se va a guardar algo (al agregar un docente o preparar una observación), la página explica qué se guarda y qué no, cita la Ley 25.326 y la Ley 26.061, y pide confirmar dos cosas: que el docente está de acuerdo y la escuela informó a las familias, y que la devolución se va a usar para acompañar, no para calificar (sección 9).
 2. **Docente.** Agregar al docente con su nombre o un alias y tocar **Observar**.
 3. **Plano.** Elegir filas y columnas y tocar los lugares para ocuparlos o vaciarlos. Con "Cambiar etiqueta", cada lugar recibe un número o hasta tres iniciales: "M.G." queda como "MG", y un nombre como "Martina" se rechaza.
 4. **Empezar** al comienzo de la clase. Arranca el reloj.
