@@ -1,0 +1,7 @@
+# GitHub Pages: no publicar el código del servidor ni los tests.
+exclude:
+  - worker
+  - test
+  - tools
+  - package.json
+  - README.md

@@ -1,7 +1,7 @@
 {
   "name": "classroom-observatory",
-  "version": "0.1.0",
-  "description": "Observación de clase con devolución para el docente: tiempo de habla, preguntas, espera y retomas.",
+  "version": "0.2.0",
+  "description": "Observación de clase con devolución para el docente: plano del aula, participación por alumno, IndexedDB, IA opcional con un servidor de la escuela y transcripción local.",
   "private": true,
   "license": "MIT",
   "scripts": {
