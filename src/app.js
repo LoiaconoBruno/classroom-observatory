@@ -653,7 +653,7 @@
     $("marco-intro").innerHTML = `Cada indicador se relaciona con componentes del ${esc(M.dominio)} del <a href="${esc(M.url)}">${esc(M.nombre)}</a>. `
       + "La herramienta no puntúa con ese marco: lo usa para que la conversación con el docente tenga un lenguaje compartido.";
     $("marco-tabla").innerHTML = `<thead><tr><th>Indicador</th><th>Componente</th><th>Relación</th></tr></thead><tbody>`
-      + Rubrica.relaciones(m).map((r) => `<tr><td>${esc(r.nombre)}</td><td>${r.componentes.map((c) => `${c.id} · ${esc(c.traduccion)}`).join("<br>")}</td><td>${esc(r.relacion)}</td></tr>`).join("")
+      + Rubrica.relaciones(m).map((r) => `<tr><td data-etiqueta="Indicador">${esc(r.nombre)}</td><td data-etiqueta="Componente">${r.componentes.map((c) => `${c.id} · ${esc(c.traduccion)}`).join("<br>")}</td><td data-etiqueta="Relación">${esc(r.relacion)}</td></tr>`).join("")
       + "</tbody>";
     $("marco-nocubre").textContent = `Lo que no cubre: ${Rubrica.NO_CUBRE.join(" ")}`;
   }

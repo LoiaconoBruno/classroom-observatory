@@ -113,6 +113,33 @@ main .contenedor {
   font-variant-numeric: tabular-nums;
 }
 
+/* En pantallas angostas, la tabla del marco se lee como tarjetas. */
+@media (max-width: 600px) {
+  #marco-tabla thead {
+    display: none;
+  }
+
+  #marco-tabla tr {
+    display: block;
+    padding: var(--e-3) 0;
+    border-bottom: 1px solid var(--borde);
+  }
+
+  #marco-tabla td {
+    display: block;
+    padding: var(--e-1) 0;
+    border: 0;
+  }
+
+  #marco-tabla td::before {
+    content: attr(data-etiqueta);
+    display: block;
+    color: var(--texto-suave);
+    font-size: var(--t-1);
+    font-weight: 600;
+  }
+}
+
 .lista {
   margin: 0;
   padding-left: var(--e-5);
