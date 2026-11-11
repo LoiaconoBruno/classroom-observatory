@@ -7,23 +7,40 @@
 // el docente, no para sancionar.
 //
 // Una sesión es una lista de eventos { t, tipo } con t en segundos desde el inicio:
-//   "habla:docente" | "habla:alumnos" | "habla:nadie"   (cambio de quién habla)
-//   "pregunta:abierta" | "pregunta:cerrada"            (pregunta del docente)
+//   "habla:docente" | "habla:alumnos" | "habla:nadie"   (cambio de quién habla; "alumnos" = el grupo)
+//   "habla:alumno" con { alumno: id del lugar }         (habla un alumno en particular, del plano)
+//   "pregunta:abierta" | "pregunta:cerrada"            (pregunta del docente, con { texto } opcional)
 //   "retoma"                                           (retoma una idea de un alumno)
+// Si la sesión tiene plano del aula, también mide la participación por alumno.
 const Observacion = (() => {
-  const TIPOS = ["habla:docente", "habla:alumnos", "habla:nadie", "pregunta:abierta", "pregunta:cerrada", "retoma"];
+  const TIPOS = ["habla:docente", "habla:alumnos", "habla:alumno", "habla:nadie", "pregunta:abierta", "pregunta:cerrada", "retoma"];
   const ESPERA_RECOMENDADA = 3; // segundos (Rowe, 1974)
+  const LARGO_TEXTO = 300;
 
-  function nueva() {
-    return { eventos: [], fin: null };
+  function nueva(plano = null) {
+    return { eventos: [], fin: null, plano };
   }
 
-  function registrar(sesion, t, tipo) {
+  const hablanAlumnos = (tipo) => tipo === "habla:alumnos" || tipo === "habla:alumno";
+
+  function registrar(sesion, t, tipo, extra = {}) {
     if (!TIPOS.includes(tipo)) throw new Error("Tipo de evento desconocido: " + tipo);
     if (sesion.fin !== null) throw new Error("La sesión ya terminó");
+    if (!Number.isFinite(t) || t < 0) throw new Error("El tiempo tiene que ser un número de segundos");
     const ultimo = sesion.eventos[sesion.eventos.length - 1];
     if (ultimo && t < ultimo.t) throw new Error("Los eventos tienen que ir en orden");
-    sesion.eventos.push({ t, tipo });
+    const evento = { t, tipo };
+    if (tipo === "habla:alumno") {
+      if (!sesion.plano) throw new Error("Para marcar un alumno hace falta el plano del aula");
+      const lugar = sesion.plano.lugares.find((l) => l.id === extra.alumno);
+      if (!lugar || !lugar.ocupado) throw new Error("Ese lugar no tiene alumno: " + extra.alumno);
+      evento.alumno = lugar.id;
+    }
+    if (tipo.startsWith("pregunta:") && extra.texto) {
+      evento.texto = String(extra.texto).trim().slice(0, LARGO_TEXTO);
+    }
+    sesion.eventos.push(evento);
+    return evento;
   }
 
   function deshacer(sesion) {
@@ -42,7 +59,7 @@ const Observacion = (() => {
     const cambios = ev.filter((e) => e.tipo.startsWith("habla:"));
     cambios.forEach((e, i) => {
       const hasta = i + 1 < cambios.length ? cambios[i + 1].t : fin;
-      habla[e.tipo.slice(6)] += Math.max(0, hasta - e.t);
+      habla[hablanAlumnos(e.tipo) ? "alumnos" : e.tipo.slice(6)] += Math.max(0, hasta - e.t);
     });
 
     const preguntas = ev.filter((e) => e.tipo.startsWith("pregunta:"));
@@ -50,7 +67,7 @@ const Observacion = (() => {
     let sinRespuesta = 0;
     preguntas.forEach((q, i) => {
       const limite = i + 1 < preguntas.length ? preguntas[i + 1].t : fin;
-      const resp = ev.find((e) => e.tipo === "habla:alumnos" && e.t >= q.t && e.t <= limite);
+      const resp = ev.find((e) => hablanAlumnos(e.tipo) && e.t >= q.t && e.t <= limite);
       if (resp) esperas.push(resp.t - q.t); else sinRespuesta++;
     });
 
@@ -70,10 +87,55 @@ const Observacion = (() => {
       sinRespuesta,
       retomas: ev.filter((e) => e.tipo === "retoma").length,
       preguntasPorMinuto: fin ? preguntas.length / (fin / 60) : 0,
+      participacion: participacion(sesion, cambios, fin),
     };
   }
 
-  const pct = (x) => Math.round(x * 100) + " %";
+  // Participación por alumno: cuántas veces tomó la palabra cada uno (una intervención
+  // empieza cuando pasa a hablar ese alumno) y cuántos segundos habló.
+  function participacion(sesion, cambios, fin) {
+    if (!sesion.plano) return null;
+    const presentes = sesion.plano.lugares.filter((l) => l.ocupado);
+    const intervenciones = Object.fromEntries(presentes.map((l) => [l.id, 0]));
+    const segundos = Object.fromEntries(presentes.map((l) => [l.id, 0]));
+    let anterior = null;
+    cambios.forEach((e, i) => {
+      const hasta = i + 1 < cambios.length ? cambios[i + 1].t : fin;
+      if (e.tipo === "habla:alumno" && e.alumno in intervenciones) {
+        if (!(anterior && anterior.tipo === "habla:alumno" && anterior.alumno === e.alumno)) intervenciones[e.alumno]++;
+        segundos[e.alumno] += Math.max(0, hasta - e.t);
+      }
+      anterior = e;
+    });
+    const cuentas = presentes.map((l) => intervenciones[l.id]);
+    const total = cuentas.reduce((a, b) => a + b, 0);
+    const participaron = cuentas.filter((x) => x > 0).length;
+    const ordenadas = [...cuentas].sort((a, b) => b - a);
+    return {
+      presentes: presentes.length,
+      participaron,
+      porcentaje: presentes.length ? participaron / presentes.length : 0,
+      nunca: presentes.filter((l) => intervenciones[l.id] === 0).map((l) => l.etiqueta),
+      intervenciones,
+      segundos,
+      total,
+      gini: total ? gini(cuentas) : null,
+      tresPrimeros: total ? ordenadas.slice(0, 3).reduce((a, b) => a + b, 0) / total : null,
+    };
+  }
+
+  // Coeficiente de Gini de una lista de cuentas: 0 si todos intervienen lo mismo,
+  // cerca de 1 si casi todas las intervenciones son de un solo alumno.
+  function gini(xs) {
+    const n = xs.length;
+    const suma = xs.reduce((a, b) => a + b, 0);
+    if (!n || !suma) return 0;
+    let dif = 0;
+    for (const a of xs) for (const b of xs) dif += Math.abs(a - b);
+    return dif / (2 * n * suma);
+  }
+
+  const pct = (x) => Math.round(x * 100) + "\u00a0%";   // espacio que no corta
   const seg = (x) => x.toFixed(1).replace(".", ",") + " s";
 
   // Devolución: fortalezas y preguntas para pensar. Nunca un puntaje.
@@ -93,7 +155,16 @@ const Observacion = (() => {
       if (m.esperaPromedio >= ESPERA_RECOMENDADA) fortalezas.push(`Después de preguntar se esperó en promedio ${seg(m.esperaPromedio)} antes de que respondieran.`);
       else preguntas.push(`Después de preguntar, la espera promedio fue de ${seg(m.esperaPromedio)}. La investigación sobre el tiempo de espera (Rowe, 1974) encontró respuestas más largas y elaboradas al esperar 3 segundos o más. ¿Qué pasaría si se sostiene un poco más el silencio?`);
     }
-    if (m.sinRespuesta > 0) preguntas.push(`${m.sinRespuesta} ${m.sinRespuesta === 1 ? "pregunta quedó" : "preguntas quedaron"} sin que hablaran los alumnos. ¿Las respondió el propio docente?`);
+    if (m.sinRespuesta > 0) preguntas.push(m.sinRespuesta === 1
+      ? "1 pregunta quedó sin que hablaran los alumnos. ¿La respondió el propio docente?"
+      : `${m.sinRespuesta} preguntas quedaron sin que hablaran los alumnos. ¿Las respondió el propio docente?`);
+
+    const p = m.participacion;
+    if (p && p.presentes && p.total) {
+      if (p.porcentaje >= 0.75) fortalezas.push(`Participaron ${p.participaron} de ${p.presentes} alumnos.`);
+      else if (p.porcentaje < 0.5) preguntas.push(`Hablaron ${p.participaron} de ${p.presentes} alumnos; ${p.nunca.length} no intervinieron. ¿Qué estrategia permitiría escuchar a quienes no participaron?`);
+      if (p.participaron > 3 && p.tresPrimeros >= 0.6) preguntas.push(`Los tres alumnos que más hablaron hicieron el ${pct(p.tresPrimeros)} de las intervenciones. ¿Cómo se podría repartir más la palabra?`);
+    }
 
     if (m.retomas >= 3) fortalezas.push(`El docente retomó ${m.retomas} veces ideas de los alumnos.`);
     else preguntas.push(m.retomas === 0
@@ -106,27 +177,31 @@ const Observacion = (() => {
     "Si lo que se enseñó es correcto o importante.",
     "El clima del aula, el vínculo ni las emociones de nadie.",
     "Qué aprendió cada alumno.",
-    "Nada sobre alumnos individuales: solo cuenta \"los alumnos\" como grupo.",
+    "Qué dijo cada alumno ni si su respuesta era correcta: solo cuántas veces y cuánto tiempo habló.",
   ];
 
-  // Una clase de 10 minutos inventada, para ver cómo queda la devolución.
+  // Una clase de 10 minutos inventada, para ver cómo queda la devolución:
+  // 20 alumnos en un plano de 4 × 6; a la pregunta de t = 200 contesta el grupo a coro.
   function ejemplo() {
-    const s = nueva();
+    const lugares = Array.from({ length: 24 }, (_, i) => ({ id: `L${i + 1}`, etiqueta: i < 20 ? String(i + 1) : "", ocupado: i < 20 }));
+    const s = nueva({ filas: 4, columnas: 6, lugares });
     const guion = [
-      [0, "habla:docente"], [40, "pregunta:cerrada"], [41.5, "habla:alumnos"], [46, "habla:docente"],
-      [120, "pregunta:abierta"], [124, "habla:alumnos"], [150, "retoma"], [152, "habla:docente"],
-      [200, "pregunta:cerrada"], [201, "habla:alumnos"], [204, "habla:docente"],
-      [260, "pregunta:cerrada"], [261, "habla:docente"],
+      [0, "habla:docente"], [40, "pregunta:cerrada", { texto: "¿Cuánto es la densidad del arroz?" }], [41.5, "habla:alumno", { alumno: "L3" }], [46, "habla:docente"],
+      [120, "pregunta:abierta", { texto: "¿Por qué la presión en el fondo deja de crecer?" }], [124, "habla:alumno", { alumno: "L8" }],
+      [133, "habla:alumno", { alumno: "L12" }], [141, "habla:alumno", { alumno: "L8" }], [150, "retoma"], [152, "habla:docente"],
+      [200, "pregunta:cerrada", { texto: "¿Es más alto o más bajo que el del trigo?" }], [201, "habla:alumnos"], [204, "habla:docente"],
+      [260, "pregunta:cerrada", { texto: "¿Se entiende?" }], [261, "habla:docente"],
       [330, "habla:nadie"], [420, "habla:docente"],
-      [450, "pregunta:abierta"], [452, "habla:alumnos"], [500, "retoma"], [503, "habla:docente"],
-      [560, "pregunta:cerrada"], [561, "habla:alumnos"], [565, "habla:docente"],
+      [450, "pregunta:abierta", { texto: "¿Qué pasaría si el silo fuera más angosto?" }], [452, "habla:alumno", { alumno: "L15" }],
+      [470, "habla:alumno", { alumno: "L5" }], [485, "habla:alumno", { alumno: "L19" }], [500, "retoma"], [503, "habla:docente"],
+      [560, "pregunta:cerrada", { texto: "¿Está claro el ejercicio para mañana?" }], [561, "habla:alumno", { alumno: "L3" }], [565, "habla:docente"],
     ];
-    for (const [t, tipo] of guion) registrar(s, t, tipo);
+    for (const [t, tipo, extra] of guion) registrar(s, t, tipo, extra);
     terminar(s, 600);
     return s;
   }
 
-  return { TIPOS, ESPERA_RECOMENDADA, nueva, registrar, deshacer, terminar, metricas, devolucion, NO_MIDE, ejemplo };
+  return { TIPOS, ESPERA_RECOMENDADA, LARGO_TEXTO, nueva, registrar, deshacer, terminar, metricas, gini, devolucion, NO_MIDE, ejemplo };
 })();
 
 if (typeof module !== "undefined") module.exports = Observacion;

@@ -27,7 +27,7 @@ test("preguntas, esperas y retomas de la clase de ejemplo", () => {
 
 test("la devolución habla en preguntas y nombra lo que salió bien", () => {
   const d = O.devolucion(O.metricas(O.ejemplo()));
-  assert.ok(d.preguntas.some((p) => p.includes("82 %")), "tiempo de habla del docente");
+  assert.ok(d.preguntas.some((p) => /82\s%/u.test(p)), "tiempo de habla del docente");
   assert.ok(d.preguntas.some((p) => p.includes("Rowe")), "tiempo de espera");
   assert.ok(d.preguntas.some((p) => p.includes("sin que hablaran")), "pregunta sin respuesta");
   assert.ok(d.preguntas.every((p) => p.includes("?")), "todas terminan en pregunta");
