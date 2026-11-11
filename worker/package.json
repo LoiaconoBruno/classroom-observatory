@@ -1,0 +1,19 @@
+{
+  "name": "observatorio-de-clase-servidor",
+  "version": "1.0.0",
+  "description": "Servidor mínimo de la escuela para classroom-observatory: guarda la key de la API de Anthropic y atiende solo tres tareas.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "1.3.0"
+  },
+  "devDependencies": {
+    "wrangler": "4.153.0"
+  }
+}

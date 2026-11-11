@@ -1,0 +1,23 @@
+# Servidor de la escuela para classroom-observatory. Ver README.md de esta carpeta.
+name = "observatorio-de-clase"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+# Páginas que pueden usar este servidor, separadas por comas.
+ORIGENES_PERMITIDOS = "https://loiaconobruno.github.io"
+# Modelo de Claude. Para gastar menos: claude-haiku-5-5.
+MODELO = "claude-opus-5-5"
+
+# Hasta 20 pedidos por minuto por dirección IP.
+[[ratelimits]]
+name = "LIMITE"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 20
+  period = 60
+
+# Los secretos no van en este archivo. Se cargan con:
+#   npx wrangler secret put ANTHROPIC_API_KEY
+#   npx wrangler secret put CODIGO_ACCESO
