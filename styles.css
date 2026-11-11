@@ -14,6 +14,20 @@ main .contenedor {
   gap: var(--e-5);
 }
 
+/* Los hijos de una grilla pueden achicarse por debajo del ancho de su contenido:
+   las tablas y planos anchos se desplazan dentro de su caja, no estiran la página. */
+.vista > *,
+.inicio > *,
+.observar__cuerpo > *,
+.reporte__seccion,
+.reporte__cabecera {
+  min-width: 0;
+}
+
+.tabla-scroll {
+  max-width: 100%;
+}
+
 .intro {
   padding-bottom: 0;
 }
