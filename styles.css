@@ -1,4 +1,97 @@
-/* Observatorio de clase: estilos propios. Tokens, componentes, cabecera y pie vienen de css/sistema.css. */
+/* Observatorio de clase: identidad propia sobre el sistema común (css/sistema.css v2.0).
+   Tipografía: Rosario, de Omnibus-Type (Argentina), licencia OFL (fonts/OFL.txt): humanista
+   y muy legible, para una herramienta de escuela.
+   Paleta: verde de pizarrón y tiza; el amarillo de tiza marca solo a quien habló.
+   Contrastes medidos (WCAG 2.1), mínimo sobre fondo y superficie:
+   claro: texto 15,2:1 · texto suave 6,7:1 · acento 7,3:1 · ok 5,6:1 · error 6,1:1 · bordes 3,3:1
+   oscuro: texto 13,9:1 · texto suave 7,8:1 · acento 9,3:1 · ok 8,3:1 · error 7,4:1 · bordes 3,8:1
+   pizarrón: tiza 11,1:1 · texto de tiza suave 7,6:1 · banco que habló 8,2:1 · borde de banco 6,2:1 */
+
+@font-face {
+  font-family: "Rosario";
+  src: url("fonts/rosario.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+:root {
+  --fuente: "Rosario", ui-sans-serif, system-ui, sans-serif;
+  --fuente-titulos: "Rosario", ui-sans-serif, system-ui, sans-serif;
+  --peso-titulos: 700;
+  --tracking-titulos: -0.01em;
+  --fondo: #f4f6f3;
+  --superficie: #ffffff;
+  --superficie-2: #e8eee9;
+  --texto: #17211d;
+  --texto-suave: #4b5a53;
+  --borde: #d3ddd7;
+  --borde-control: #7b8a83;
+  --acento: #1e5b45;
+  --acento-hover: #164836;
+  --acento-texto: #ffffff;
+  --acento-suave: #e3efe9;
+  --ok: #14704a;
+  --error: #b42318;
+  --pizarron: #1e3b32;
+  --tiza: #f1f5f2;
+  --tiza-suave: #bfd0c7;
+  --tiza-borde: #a9beb4;
+  --tiza-amarilla: #f5d061;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #0d1512;
+    --superficie: #14201b;
+    --superficie-2: #1b2a24;
+    --texto: #e4ece7;
+    --texto-suave: #a3b5ac;
+    --borde: #26362f;
+    --borde-control: #6a7c73;
+    --acento: #7fd1ae;
+    --acento-hover: #9fe0c4;
+    --acento-texto: #0d1512;
+    --acento-suave: #1b3229;
+    --ok: #5bcb94;
+    --error: #ff8b80;
+  }
+}
+
+/* El aula de la portada: el plano de la clase de ejemplo, dibujado en tiza. */
+.aula {
+  margin: 0;
+  padding: var(--e-5);
+  background: var(--pizarron);
+  color: var(--tiza);
+  border-radius: 10px;
+  border: 1px solid #2c5245;
+}
+.aula__frente { display: flex; justify-content: space-between; align-items: end; gap: var(--e-4); margin-bottom: var(--e-5); }
+.aula__pizarron { flex: 1; padding: var(--e-2) var(--e-3); border: 2px solid var(--tiza-borde); border-radius: 4px; color: var(--tiza-suave); font-size: var(--t-2); text-align: center; }
+.aula__escritorio { padding: var(--e-2) var(--e-4); border: 2px dashed var(--tiza-borde); border-radius: 4px; color: var(--tiza-suave); font-size: var(--t-2); }
+.aula__bancos { display: grid; grid-template-columns: repeat(var(--columnas, 6), minmax(0, 1fr)); gap: var(--e-2); }
+.banco {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  border: 2px solid var(--tiza-borde);
+  border-radius: 6px;
+  color: var(--tiza-suave);
+  font-size: var(--t-2);
+  font-weight: 600;
+}
+.banco--vacio { border-style: dotted; border-color: rgba(169, 190, 180, 0.45); }
+.banco--hablo {
+  animation: banco-habla 500ms ease-out both;
+  animation-delay: calc(400ms + var(--orden, 0) * 260ms);
+}
+.banco small { position: absolute; top: 2px; right: 5px; font-size: 11px; font-weight: 700; }
+@keyframes banco-habla {
+  from { background: transparent; border-color: var(--tiza-borde); color: var(--tiza-suave); }
+  to { background: var(--tiza-amarilla); border-color: var(--tiza-amarilla); color: var(--pizarron); }
+}
+.aula__pie { margin-top: var(--e-4); color: var(--tiza-suave); font-size: var(--t-2); }
 
 main:focus,
 .vista h1:focus {

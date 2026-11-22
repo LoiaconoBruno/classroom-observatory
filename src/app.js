@@ -46,6 +46,24 @@
     mostrar("inicio");
   }
 
+  // La portada dibuja el plano de la clase de ejemplo: los bancos de quienes hablaron se
+  // iluminan en el orden en que hablaron por primera vez. Los datos salen del ejemplo real.
+  function portadaAula() {
+    const s = Observacion.ejemplo();
+    const p = Observacion.metricas(s).participacion;
+    const orden = [];
+    for (const ev of s.eventos) if (ev.tipo === "habla:alumno" && !orden.includes(ev.alumno)) orden.push(ev.alumno);
+    $("aula-bancos").style.setProperty("--columnas", s.plano.columnas);
+    $("aula-bancos").innerHTML = s.plano.lugares.map((l) => {
+      if (!l.ocupado) return '<span class="banco banco--vacio"></span>';
+      const k = orden.indexOf(l.id);
+      const n = p.intervenciones[l.id] || 0;
+      return `<span class="banco${k >= 0 ? " banco--hablo" : ""}" style="--orden:${Math.max(k, 0)}">${esc(l.etiqueta)}${n ? `<small>${n}</small>` : ""}</span>`;
+    }).join("");
+    $("aula-pie").textContent = `Plano de la clase de ejemplo: hablaron ${p.participaron} de ${p.presentes} alumnos. Los bancos se iluminan en el orden en que cada uno habló por primera vez; el número chico es cuántas veces habló.`;
+  }
+  portadaAula();
+
   /* Consentimiento */
 
   async function conConsentimiento() {
