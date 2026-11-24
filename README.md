@@ -4,7 +4,7 @@
 
 **Observatorio de clase.** Para que una escuela chica observe clases y les dé a sus docentes una devolución: quién habla, qué se pregunta, cuánto se espera y quiénes participan. Una herramienta para mejorar, nunca un puntaje ni una sanción.
 
-[**▶ Probala en vivo**](https://loiaconobruno.github.io/classroom-observatory/) · [**📄 Paper y guía**](https://loiaconobruno.github.io/classroom-observatory/guia.html) · [Cómo funciona](#cómo-funciona) · [IA opcional](#ia-opcional) · [Privacidad](#privacidad) · [Limitaciones](#limitaciones)
+[**▶ Probala en vivo**](https://loiaconobruno.github.io/classroom-observatory/) · [**📄 Paper y guía**](https://loiaconobruno.github.io/classroom-observatory-paper/) · [Cómo funciona](#cómo-funciona) · [IA opcional](#ia-opcional) · [Privacidad](#privacidad) · [Limitaciones](#limitaciones)
 
 [![Tests](https://github.com/LoiaconoBruno/classroom-observatory/actions/workflows/tests.yml/badge.svg)](https://github.com/LoiaconoBruno/classroom-observatory/actions/workflows/tests.yml)
 ![Dependencias: 0](https://img.shields.io/badge/dependencias-0-brightgreen)
@@ -109,7 +109,7 @@ Los datos de los alumnos son datos de menores (Ley 25.326 y Ley 26.061).
 
 ## Paper de uso y guía
 
-[`guia.html`](https://loiaconobruno.github.io/classroom-observatory/guia.html) (fuente en [`docs/guia.md`](docs/guia.md), generada con `python3 tools/guia.py`) tiene un paper de uso paso a paso y una guía sobre la idea de fondo, con citas a los especialistas del tema. Todas las referencias tienen DOI o URL.
+El repositorio [`classroom-observatory-paper`](https://github.com/LoiaconoBruno/classroom-observatory-paper) ([leelo en la web](https://loiaconobruno.github.io/classroom-observatory-paper/)) tiene un paper de uso paso a paso y una guía sobre la idea de fondo, con citas a los especialistas del tema. Todas las referencias tienen DOI o URL.
 
 ## Licencia
 
